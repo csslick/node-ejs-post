@@ -1,11 +1,10 @@
 const express = require('express');
 const app = express();
 const ejs = require('ejs');
+const fs = require('fs');
 
 // 글 DB
-const posts = [
-  '첫번째 글',
-];
+let posts = [];
 
 // post 요청시 필요
 app.use(express.json())
@@ -17,9 +16,15 @@ app.set('view engine', 'ejs');
 // 정적파일 경로 지정
 app.use(express.static("public"));
 
+// 파일 불러오기
+const readfile = fs.readFileSync('postsDB.json', 'utf-8');
+const jsonData = JSON.parse(readfile)
+console.log(jsonData)
+posts = [...jsonData]
+
 // home
-app.get('/', function(요청, 응답){
-  응답.render('pages/index.ejs', { posts })
+app.get('/', function(req, res){
+  res.render('pages/index.ejs', { posts })
 })
 
 // about
@@ -33,6 +38,7 @@ app.post('/create', function(req, res) {
   console.log(req.body)
   // DB에 글 저장
   posts.push(post);
+  fs.writeFileSync('postsDB.json', JSON.stringify(posts))
   console.log(posts);
   
   // 홈(게시판)으로 이동
