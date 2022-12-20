@@ -20,7 +20,7 @@ app.use(express.static("public"));
 const readfile = fs.readFileSync('postsDB.json', 'utf-8');
 const jsonData = JSON.parse(readfile)
 console.log(jsonData)
-posts = [...jsonData]
+posts = [...jsonData].reverse(); // 내림차 순(최신 글)순으로 변경
 
 // home
 app.get('/', function(req, res){
@@ -34,10 +34,11 @@ app.get('/about', function(req, res) {
 
 // create
 app.post('/create', function(req, res) {
+  const name = req.body.name;
   const post = req.body.post;
   console.log(req.body)
   // DB에 글 저장
-  posts.push(post);
+  posts.push({ name, post });
   fs.writeFileSync('postsDB.json', JSON.stringify(posts))
   console.log(posts);
   

@@ -2,3 +2,16 @@
 a {
   color: red;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav {
+  margin-bottom: 40px;
+}
+
+.post-list > li {
+
+}
