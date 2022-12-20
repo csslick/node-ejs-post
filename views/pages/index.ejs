@@ -29,6 +29,7 @@
     <ul class="post-list">
     <% for(let i = 0; i < posts.length; i++) { %>
       <li class="border-bottom py-2">
+        <span>Post No: <%= i %> </span>
         <small class="fw-bold">작성자: <%= posts[i].name %> </small>
         <p class="fw-light"><%= posts[i].post %></p> 
       </li>
