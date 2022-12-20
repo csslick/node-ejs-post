@@ -22,16 +22,21 @@
       <div class="mb-3">
         <textarea name="post" placeholder="글을 입력해주세요" class="form-control"></textarea>
       </div>
-        <button type="submit" class="btn btn-primary">보내기</button>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
     </form>
     <h2>글 목록</h2>
-    <!-- 글의 개수만큼 출력 -->
+    <!-- 글의 개수만큼 출력(최신글 순) -->
     <ul class="post-list">
-    <% for(let i = 0; i < posts.length; i++) { %>
-      <li class="border-bottom py-2">
-        <span>Post No: <%= i %> </span>
-        <small class="fw-bold">작성자: <%= posts[i].name %> </small>
-        <p class="fw-light"><%= posts[i].post %></p> 
+    <% for(let i = posts.length-1; i >= 0; i--) { %>
+      <li class="border-bottom py-4 d-flex justify-content-between align-items-start">
+        <div class="col me-3">
+          <span>Post No: <%= i %> </span>
+          <small class="fw-bold">작성자: <%= posts[i].name %> </small>
+          <p class="fw-light m-0"><%= posts[i].post %></p> 
+        </div>
+        <form action="/delete/<%= i %>" method="post">
+          <button class="btn btn-danger">삭제</button>
+        </form>
       </li>
     <% } %>
     </ul>

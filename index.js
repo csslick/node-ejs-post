@@ -19,8 +19,8 @@ app.use(express.static("public"));
 // 파일 불러오기
 const readfile = fs.readFileSync('postsDB.json', 'utf-8');
 const jsonData = JSON.parse(readfile)
-console.log(jsonData)
-posts = [...jsonData].reverse(); // 내림차 순(최신 글)순으로 변경
+// console.log(jsonData)
+posts = [...jsonData];
 
 // home
 app.get('/', function(req, res){
@@ -40,11 +40,20 @@ app.post('/create', function(req, res) {
   // DB에 글 저장
   posts.push({ name, post });
   fs.writeFileSync('postsDB.json', JSON.stringify(posts))
-  console.log(posts);
   
   // 홈(게시판)으로 이동
   res.redirect('/');
 })
+
+// delete
+app.post('/delete/:id', function(req, res) {
+  // 글번호(배열)
+  const id = req.params.id;
+  const updatePost = posts.splice(id, 1);
+  console.log('updatePost = ', posts)
+  res.redirect('/')
+})
+
 
 
 const port = 3001;
